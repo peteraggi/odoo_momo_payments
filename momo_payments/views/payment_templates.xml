@@ -1,0 +1,139 @@
+<odoo>
+    <!-- Payment Provider Form -->
+    <record id="view_payment_provider_form_inherit" model="ir.ui.view">
+        <field name="name">payment.provider.form.inherit.mtn</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form"/>
+        <field name="arch" type="xml">
+            <group name="provider_credentials" position="inside">
+                <group invisible="code != 'mtn_momo'"
+                       name="mtn_momo_credentials">
+                <field 
+                name="mtn_api_key"
+                string="API Key"
+                required="code == 'mtn_momo' and state != 'disabled'" 
+                groups="base.group_system"
+                />
+                <field 
+                name="mtn_public_key"
+                string="Public Key"
+                required="code == 'mtn_momo' and state != 'disabled'" 
+                groups="base.group_system"/>
+                <field 
+                name="mtn_subscription_key" 
+                string="Mtn Subscription Key"
+                required="code == 'mtn_momo' and state != 'disabled'"
+                groups="base.group_system"/>
+                <field 
+                name="mtn_client_id"
+                string="Client ID"
+                required="code == 'mtn_momo' and state != 'disabled'" 
+                groups="base.group_system"/>
+                <field 
+                name="mtn_base_url"
+                string="Base URL"
+                required="code == 'mtn_momo' and state != 'disabled'" 
+                groups="base.group_system"/>
+                <field 
+                name="mtn_environment"
+                string="Environment"
+                required="code == 'mtn_momo' and state != 'disabled'" 
+                groups="base.group_system"/>
+                <field 
+                name="mtn_currency"
+                string="Currency"
+                required="code == 'mtn_momo' and state != 'disabled'" 
+                groups="base.group_system"/>
+             </group>
+            </group>
+        </field>
+    </record>
+
+    <!-- Payment Form Template -->
+    <template id="payment_form" name="MTN Payment Form">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h4 class="mb-0">MTN Mobile Money Payment</h4>
+                            </div>
+                            <div class="card-body">
+                                <form t-attf-action="/payment/mtn/checkout" method="post">
+                                    <input type="hidden" name="reference" t-att-value="reference"/>
+                                    <div class="form-group">
+                                        <label for="mobile">Mobile Number</label>
+                                        <input type="tel" class="form-control" id="mobile" name="mobile" 
+                                               placeholder="256XXXXXXXXX" required="required" pattern="256\d{9}"/>
+                                        <small class="form-text text-muted">Format: 256 followed by 9 digits (e.g., 256772123456)</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Amount</label>
+                                        <p class="form-control-static">
+                                            <t t-esc="amount"/> <t t-esc="currency.name"/>
+                                        </p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Reference</label>
+                                        <p class="form-control-static" t-esc="reference"/>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        Pay Now
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Payment Status Template -->
+    <template id="payment_status" name="MTN Payment Status">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header" t-attf-class="bg-{{ 'success' if status == 'done' else 'warning' if status == 'pending' else 'danger' }} text-white">
+                                <h4 class="mb-0">
+                                    <t t-if="status == 'done'">Payment Successful</t>
+                                    <t t-elif="status == 'pending'">Payment Processing</t>
+                                    <t t-else="">Payment Failed</t>
+                                </h4>
+                            </div>
+                            <div class="card-body text-center">
+                                <t t-if="status == 'done'">
+                                    <i class="fa fa-check-circle fa-5x text-success mb-4"></i>
+                                    <p>Your payment has been successfully processed.</p>
+                                    <p>Transaction ID: <span t-esc="tx.mtn_transaction_id"/></p>
+                                    <a href="/my/orders" class="btn btn-success">View Order</a>
+                                </t>
+                                <t t-elif="status == 'pending'">
+                                    <i class="fa fa-spinner fa-spin fa-5x text-warning mb-4"></i>
+                                    <p>Please approve the payment request on your mobile phone.</p>
+                                    <p>We'll automatically update this page when payment is confirmed.</p>
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <script>
+                                        setTimeout(function() {
+                                            window.location.reload();
+                                        }, 3000);
+                                    </script>
+                                </t>
+                                <t t-else="">
+                                    <i class="fa fa-times-circle fa-5x text-danger mb-4"></i>
+                                    <p>Your payment could not be processed.</p>
+                                    <a href="/shop" class="btn btn-primary">Back to Shop</a>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

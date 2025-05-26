@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--I initialize my Payment Provider from here like magic-->
+<odoo noupdate="1">
+    <record id="payment_provider_mtn_momo" model="payment.provider">
+        <field name="name">MTN Mobile Money Payments</field>
+        <field name="code">mtn_momo</field>
+        <!-- <field name="state">enabled</field> -->
+        <!-- <field name="is_published">False</field> -->
+        <field name="allow_tokenization">True</field>
+        <field name="pending_msg">A Confirmation message has been sent to your phone.Please enter the PIN to confirm the payment!</field>
+        <field name="image_128" type="base64" file="momo_payments/static/description/icon.png"/>
+        <field name="maximum_amount">4000000</field>
+         <field name="module_id" ref="base.module_momo_payments" />
+        <field name="support_refund"></field>
+        <field name="main_currency_id" ref="base.UGX"/>
+
+        <field name="mtn_public_key">484848483jdmccmririi</field>
+        <field name="mtn_api_key">3838484848833ujdjdjdjcjcmc</field>
+        <field name="mtn_client_id">45858695940</field>
+        <field name="mtn_subscription_key">e.g584849494030303030202</field>
+    </record>
+</odoo>
