@@ -1,113 +1,138 @@
-# Odoo MTN Mobile Money (MoMo) Payments Integration
+# 🌐 Odoo MTN Mobile Money (MoMo) Payment Gateway
 
-This module integrates **MTN Mobile Money (MoMo)** with the **Odoo Community Edition**. It allows you to receive payments seamlessly through MoMo on your **Odoo E-commerce website** and **Customer Portal**.
+Seamlessly integrate MTN's Mobile Money payments into your Odoo eCommerce platform with this professional module. Accept secure mobile payments directly through your Odoo Community Edition without requiring an Enterprise license.
 
----
+## ✨ Key Features
 
-## 🌟 Features
+- **End-to-End Payment Processing**: Complete MoMo transactions within Odoo's native interface
+- **Dual Environment Support**: Test in sandbox mode before going live
+- **Real-Time Verification**: Automatic payment confirmation and reconciliation
+- **Omnichannel Compatibility**: Works with:
+  - Odoo eCommerce storefronts
+  - Customer portal invoices
+  - Payment links
+- **Secure API Integration**: PCI-compliant connection to MTN's mobile money platform
 
-- Accept payments via MTN MoMo directly on your Odoo site
-- Integrates with Odoo's sales orders and customer invoices
-- Real-time payment confirmation
-- Works with Odoo Community Edition (no Enterprise license required)
-- Clean and secure API integration
+## 📋 Prerequisites
 
----
+- Odoo Community Edition (v17+ recommended)
+- Active MTN MoMo merchant account
+- Valid API credentials from MTN
+- Server with internet access to connect to MTN APIs
 
-## 🛠️ Requirements
+## 🚀 Getting Started
 
-- Odoo Community Edition (17 or v18 recommended)
-- MTN MoMo Merchant Account (with API credentials)
-- Internet access for server to reach MTN MoMo APIs
+### Official MoMo Onboarding
 
----
+1. **Apply for Live Account**:  
+   Visit [MTN Developer Portal](https://momodeveloper.mtn.com/golive)  
+   → Select your operating country  
+   → Choose "CollectionsProduct" (minimum requirement)
 
-## 📦 Installation
+2. **Complete Registration**:  
+   Submit all required business documentation  
+   Wait for MTN approval (typically 2-5 business days)
 
-1. **Download or clone** this module into your custom addons directory:
-   ```bash
-   git clone https://github.com/yourusername/odoo_momo_payments.git
-Edit your odoo.conf to include the path to your custom addons:
+3. **Obtain API Credentials**:  
+   - Subscription Key  
+   - API User ID  
+   - API Primary Key  
+   *(Contact aggipeter25@gmail.com for setup assistance if needed)*
 
-ini
-Copy
-Edit
+## 🛠 Installation Guide
+
+```bash
+# Clone repository to your custom addons directory
+git clone https://github.com/yourusername/odoo_momo_payments.git
+
+# Add path to odoo.conf
 addons_path = /path/to/your/custom/addons
-Restart your Odoo server:
 
-bash
-Copy
-Edit
+# Update Odoo modules
 ./odoo-bin -u all -d your_database_name
-Activate Developer Mode, go to Apps, click Update App List, search for MTN MoMo Payments, and click Install.
+# Odoo MTN Mobile Money Integration Guide
 
-⚙️ Configuration
-Navigate to Invoicing → Configuration → Payment Acquirers
+## Post-Installation Steps
 
-Click on MTN MoMo
+1. **Enable Developer Mode** in your Odoo instance
+2. **Update Apps List** to refresh available modules
+3. Search for **"MTN MoMo Payments"** in the Apps menu
+4. Click **Install** to activate the module
 
-Enable the acquirer by setting the status to Enabled
+---
 
-Fill in the required fields:
+## ⚙ Configuration Settings
 
-Subscription Key
+### Access Path:
+`Invoicing → Configuration → Payment Acquirers → MTN MoMo`
 
-API User ID
+### Core Configuration Options:
 
-API Primary Key
+**Provider State:**
+- 🧪 **Test Mode**: Sandbox environment with auto-generated credentials
+- ✅ **Enabled**: Live transaction mode (requires complete credentials)
+- ❌ **Disabled**: Deactivates the payment provider
 
-Target Environment (sandbox or production)
+**Authentication Credentials:**
+- 🔑 **Secret Key** (Mandatory for all modes)
+- 👤 **API User UUID** (Required for live production only)
+- 🔐 **API Primary Key** (Required for live production only)
 
-Configure journal and callback URL
+**Financial Setup:**
+- 📒 Create/assign a dedicated **Payment Journal** for MoMo transactions
 
-Save and test the connection.
+---
 
-🚀 Usage
-Customers will now see MTN MoMo as a payment option during checkout or when paying an invoice
+## 🔄 Payment Processing Flow
 
-They enter their phone number and confirm the MoMo push request on their phone
+### eCommerce Checkout Process:
+1. Customer selects **"MTN MoMo"** as payment method
+2. Enters registered mobile number
+3. Confirms payment amount
+4. Receives push notification on MoMo app
+5. Approves transaction → Instant Odoo confirmation
+6. Order status updates to **Paid** automatically
 
-Once payment is successful, Odoo marks the order/invoice as paid
+### Invoice Payment Process:
+1. Customer accesses payment link
+2. Completes same MoMo verification steps
+3. Real-time invoice status synchronization
 
-🙋‍♂️ Support & Setup Assistance
-For help with installation, configuration, or custom features, please contact:
+---
 
-📧 aggipeter25@gmail.com
+## ⏱ Technical Implementation Details
 
-🧾 License
-This software and its source code are provided under the Odoo Proprietary License v1.0:
+**Payment Initialization:**
+- Triggers RTP API call upon "Pay Now" action
 
-pgsql
-Copy
-Edit
-Copyright (C) 2024-present by aggipeter25
+**Status Verification:**
+- System polls payment status every **3 seconds**
+- Maximum **20 retries** (60 second total timeout)
 
-This software and associated files (the "Software") may only be used (executed,
-modified, executed after modifications) if you have purchased a valid license
-from the author.
+**Transaction Management:**
+- Detailed logging of all transaction attempts
+- Automatic journal entry generation
+- Success/Failure status tracking for reconciliation
 
-You may develop Odoo modules based on the Software and distribute them under
-the license of your choice, provided that it is compatible with the terms of
-this License.
+---
 
-It is forbidden to publish, distribute, sublicense, or sell copies of the
-Software or modified copies of the Software.
+## 🆘 Support Services
 
-The above copyright notice and this permission notice must be included in all
-copies or substantial portions of the Software.
+For technical assistance or custom development requests:
+📧 **Email:** [aggipeter25@gmail.com](mailto:aggipeter25@gmail.com)
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+---
 
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-USE OR OTHER DEALINGS IN THE SOFTWARE.
-🧠 Credits
-Developed and maintained by aggipeter25
+## 📜 License Agreement
 
-🔗 Stay Updated
-To receive future updates, request a demo, or discuss partnership opportunities:
+```sql
+Copyright (C) 2024 aggipeter25
 
-📧 aggipeter25@gmail.com
+Licensed under Odoo Proprietary License v1.0
+
+Key Provisions:
+- Valid license required for operational use
+- Modification rights granted
+- Redistribution prohibited
+- No expressed warranties
+- Commercial use permitted with proper licensing
