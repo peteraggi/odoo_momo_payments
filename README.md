@@ -41,7 +41,6 @@ Seamlessly integrate MTN's Mobile Money payments into your Odoo eCommerce platfo
 
 ## 🛠 Installation Guide
 
-```bash
 # Clone repository to your custom addons directory
 git clone https://github.com/yourusername/odoo_momo_payments.git
 
