@@ -1,4 +1,4 @@
-# 🌐 Odoo MTN Mobile Money (MoMo) Payment Gateway
+# 🌐 Odoo MTN Mobile Money (MoMo) Payment Implementation
 
 Seamlessly integrate MTN's Mobile Money payments into your Odoo eCommerce platform with this professional module. Accept secure mobile payments directly through your Odoo Community Edition without requiring an Enterprise license.
 
@@ -36,7 +36,8 @@ Seamlessly integrate MTN's Mobile Money payments into your Odoo eCommerce platfo
 3. **Obtain API Credentials**:  
    - Subscription Key  
    - API User ID  
-   - API Primary Key  
+   - API Primary Key
+   - API UUID
    *(Contact aggipeter25@gmail.com for setup assistance if needed)*
 
 ## 🛠 Installation Guide
