@@ -51,37 +51,6 @@ addons_path = /path/to/your/custom/addons
 ./odoo-bin -u all -d your_database_name
 # Odoo MTN Mobile Money Integration Guide
 
-## Post-Installation Steps
-
-1. **Enable Developer Mode** in your Odoo instance
-2. **Update Apps List** to refresh available modules
-3. Search for **"MTN MoMo Payments"** in the Apps menu
-4. Click **Install** to activate the module
-
----
-
-## ⚙ Configuration Settings
-
-### Access Path:
-`Invoicing → Configuration → Payment Acquirers → MTN MoMo`
-
-### Core Configuration Options:
-
-**Provider State:**
-- 🧪 **Test Mode**: Sandbox environment with auto-generated credentials
-- ✅ **Enabled**: Live transaction mode (requires complete credentials)
-- ❌ **Disabled**: Deactivates the payment provider
-
-**Authentication Credentials:**
-- 🔑 **Secret Key** (Mandatory for all modes)
-- 👤 **API User UUID** (Required for live production only)
-- 🔐 **API Primary Key** (Required for live production only)
-
-**Financial Setup:**
-- 📒 Create/assign a dedicated **Payment Journal** for MoMo transactions
-
----
-
 ## 🔄 Payment Processing Flow
 
 ### eCommerce Checkout Process:
@@ -96,42 +65,3 @@ addons_path = /path/to/your/custom/addons
 1. Customer accesses payment link
 2. Completes same MoMo verification steps
 3. Real-time invoice status synchronization
-
----
-
-## ⏱ Technical Implementation Details
-
-**Payment Initialization:**
-- Triggers RTP API call upon "Pay Now" action
-
-**Status Verification:**
-- System polls payment status every **3 seconds**
-- Maximum **20 retries** (60 second total timeout)
-
-**Transaction Management:**
-- Detailed logging of all transaction attempts
-- Automatic journal entry generation
-- Success/Failure status tracking for reconciliation
-
----
-
-## 🆘 Support Services
-
-For technical assistance or custom development requests:
-📧 **Email:** [aggipeter25@gmail.com](mailto:aggipeter25@gmail.com)
-
----
-
-## 📜 License Agreement
-
-```sql
-Copyright (C) 2024 aggipeter25
-
-Licensed under Odoo Proprietary License v1.0
-
-Key Provisions:
-- Valid license required for operational use
-- Modification rights granted
-- Redistribution prohibited
-- No expressed warranties
-- Commercial use permitted with proper licensing
